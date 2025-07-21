@@ -2,16 +2,26 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const dotenv = require("dotenv");
-const adminRoutes = require("./routes/adminRoutes");
 
+// Load environment variables
 dotenv.config();
+
+// Import routes (once only)
+const adminRoute = require("./routes/adminRoute");
+const studentRoute = require("./routes/studentRoute");
+
+// Create express app
 const app = express();
 
 // Middleware
 app.use(cors());
-app.use(express.json()); // for JSON parsing
+app.use(express.json()); // for parsing application/json
 
-// MongoDB Connection
+// Route middleware
+app.use("/api/admin", adminRoute);
+app.use("/api/student", studentRoute);
+
+// MongoDB connection
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -19,9 +29,6 @@ mongoose.connect(process.env.MONGO_URI, {
 .then(() => console.log("MongoDB connected ✅"))
 .catch((err) => console.log("MongoDB error:", err));
 
-// Routes
-app.use("/api/admin", adminRoutes);
-
-// Start Server
+// Start server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
