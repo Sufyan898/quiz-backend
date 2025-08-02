@@ -1,17 +1,17 @@
-// controllers/studentController.js
+
 const User = require("../models/Student");
 
 // POST /api/student
 const registerStudent = async (req, res) => {
   try {
-    const { name, cnic, fName, dob, lastMarks } = req.body;
+    const { name, cnic, fName, dob } = req.body;
 
     const existingUser = await User.findOne({ cnic });
     if (existingUser) {
       return res.status(409).json({ error: "User with this CNIC already exists" });
     }
 
-    const newUser = new User({ name, cnic, fName, dob, lastMarks });
+    const newUser = new User({ name, cnic, fName, dob });
     await newUser.save();
 
     res.status(201).json({ message: "User saved successfully!" });

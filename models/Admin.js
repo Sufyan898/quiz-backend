@@ -5,6 +5,18 @@ const adminSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
+  origin: {
+    type: String,
+    default: "",
+  },
+  education: {
+    type: String,
+    default: "",
+  },
+  about: {
+    type: String,
+    default: "",
+  },
   email: {
     type: String,
     required: true,
@@ -15,6 +27,7 @@ const adminSchema = new mongoose.Schema({
     type: String,
     required: true,
     minlength: 6,
+     select: false
   },
 });
 module.exports =mongoose.model("Admin", adminSchema);

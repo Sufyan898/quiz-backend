@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const verifyToken = require('../middleware/authMiddleware'); 
 
-const { registerAdmin, loginAdmin } = require("../controllers/adminController");
+const { registerAdmin, loginAdmin, updateAdminProfile, getAdminProfile } = require("../controllers/adminController");
 
 router.get("/dashboard", verifyToken, (req, res) => {
     res.json({
@@ -11,7 +11,15 @@ router.get("/dashboard", verifyToken, (req, res) => {
     });
 });
 
-// POST /api/admin/register
+router.get("/profile", verifyToken, getAdminProfile);
+router.put("/update-profile", verifyToken, updateAdminProfile);
+
+// Auth routes  
 router.post("/register", registerAdmin);
 router.post("/login", loginAdmin); 
+
+router.get("/logout", (req, res) => {
+    res.status(200).json({ message: "Logout successful" });
+});
+
 module.exports = router;
