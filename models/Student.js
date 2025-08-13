@@ -1,19 +1,11 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 
 const studentSchema = new mongoose.Schema({
-  name: String,
-  cnic: {
-    type: String,
-    required: true,
-    unique: true, // this line prevents duplicate CNICs
-  },
-  fatherName: String,
-  dob: String,
-  selectedSubject: String,
-  submittedAt: {
-    type: Date,
-    default: Date.now,
-  }
-});
+  name: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  dob: { type: Date, required: true },
+  selectedSubject: { type: String, required: true }
+}, { timestamps: true });
 
-module.exports = mongoose.model("Student", studentSchema);
+export default mongoose.model("Student", studentSchema);
