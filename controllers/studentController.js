@@ -77,15 +77,10 @@ export const loginStudent = async (req, res) => {
       return res.status(400).json({ message: "Invalid email or password" });
     }
 
-    // 3. Match subject (optional security step)
-    // if (student.selectedSubject !== subject) {
-    //   return res.status(400).json({ message: "Subject does not match your registration" });
-    // }
-
-    // 4. Generate token
+    // 3. Generate token
     const token = generateToken(student._id);
 
-    // 5. Response
+    // 4. Response
     res.json({
       message: "Login successful",
       token,
